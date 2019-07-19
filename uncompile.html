@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+ 
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		请输入密码：<input type="text" id="n_password" />
+				
+		<input type="button" value="验证密码获取内容" id="get_content_btn"/>
+ 
+	</body>
+	
+	
+	
+ 	<script>
+	
+	//获取绝对路径
+	var getCurrAbsPath = function(){
+		return document.currentScript.src;
+	};
+	
+	//验证解密
+	get_content_btn.onclick=function(){
+		var nPassword = document.getElementById("n_password").value;
+		if(nPassword == ''){
+			alert("请输入解密密码！");
+			return;
+		}else{
+			var yPassword = uncompileStr(getUrlParam('password'));
+			if(yPassword == nPassword){
+				var yContent = uncompileStr(getUrlParam('content'));
+				alert("密码验证成功！其加密内容为：" + yContent);
+				return;
+			}else{
+				alert("密码验证失败！");
+				return;
+			}
+		}
+ 	}
+ 
+	function getUrlParam(name) { 
+		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); 
+		var r = window.location.search.substr(1).match(reg); 
+ 		if (r != null) 
+		return unescape(r[2]); 
+		return null; 
+	}
+	
+	function uncompileStr(code){//字符串进行解密       
+		code=unescape(code);      
+		var c=String.fromCharCode(code.charCodeAt(0)-code.length);      
+		for(var i=1;i<code.length;i++){      
+			c+=String.fromCharCode(code.charCodeAt(i)-c.charCodeAt(i-1));      
+		}      
+		return c;   
+	}
+	</script>
+</html>

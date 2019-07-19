@@ -1,1 +1,46 @@
-WangJi
+<!DOCTYPE html>
+<html>
+ 
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		加密内容：<input type="text" id="compile_str_content" />
+		
+		解密密码：<input type="text" id="compile_str_password" />
+		
+		<input type="button" value="将内容加密" id="compile_str_btn"/>
+		 
+		 <div id="div"></div>
+	</body>
+	
+	
+	
+ 	<script>
+	
+	//加密
+	compile_str_btn.onclick=function(){
+		var content = document.getElementById("compile_str_content").value;
+		var password = document.getElementById("compile_str_password").value;
+		
+		var url = document.location.toString().replace(/compile/g,"uncompile");  //获取当前文件的绝对路径
+ 		
+		var href = url + '?content=' + compileStr(content) + '&password=' + compileStr(password);
+		var tab = "<a href='" +href+ "'>点击跳转验证页面</a>  绝对路径为："+href;
+
+		var div = document.getElementById("div");
+		div.innerHTML = tab;
+	}
+ 
+	function compileStr(code){ //对字符串进行加密       
+		var c=String.fromCharCode(code.charCodeAt(0)+code.length);
+		for(var i=1;i<code.length;i++)
+		{      
+			c+=String.fromCharCode(code.charCodeAt(i)+code.charCodeAt(i-1));
+		}   
+		return escape(c);   
+	}
+	</script>
+</html>
